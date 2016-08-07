@@ -14,6 +14,13 @@ module.exports = {
           path.resolve(__dirname, 'src')
         ],
         loader: 'babel',
+      },
+      {
+        test: /\.html$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: 'file?name=[name].[ext]'
       }
     ]
   },
