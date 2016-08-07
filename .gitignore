@@ -12,3 +12,4 @@ rethinkdb_data
 Dockerfile
 horizon-cert.pem
 horizon-key.pem
+docker-compose.yml
