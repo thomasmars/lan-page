@@ -4,6 +4,7 @@
   "description": "lan page for stuff",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "buildDev": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
