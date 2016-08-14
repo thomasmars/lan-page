@@ -22,6 +22,12 @@ const oAuthProviders = [
 ]
 
 horizon.connect()
+if (horizon.hasAuthToken()) {
+  console.log("has token!");
+}
+else {
+  console.log("no token");
+}
 ReactDOM.render(
   <div>
     {oAuthProviders.map((provider) => {
