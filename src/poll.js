@@ -1,5 +1,4 @@
 import React from 'react'
-import Horizon from '@horizon/client';
 
 class Poll extends React.Component {
   constructor(props) {
