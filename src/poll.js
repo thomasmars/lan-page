@@ -6,7 +6,6 @@ class Poll extends React.Component {
 
     this.horizon = Horizon();
     this.dbGames = this.horizon('games');
-    console.log("dbgames ?", this.dbGames);
     this.dbGames.fetch().subscribe(items => {
       items.forEach(item => {
         console.log("item", item);
@@ -23,18 +22,24 @@ class Poll extends React.Component {
     // Enter pressed
     if (event.which === 13) {
       // Register as new game
+      const gameName = this.state.input;
       this.games.push(this.state.input)
 
       // Store in database
-      console.log("dbGames", this.dbGames);
       // this.dbGames.store()
-      console.log("current user ?", Horizon.currentUser);
+      this.horizon.currentUser().fetch().subscribe(user => {
+        this.dbGames.store({
+          userId: user.id,
+          game: gameName,
+          date: new Date()
+        })
 
-      // Clear state
-      // TODO: put in action, update whole state
-      this.setState({
-        input: ''
-      })
+        // Clear state
+        // TODO: put in action, update whole state
+        this.setState({
+          input: ''
+        })
+      });
     }
   }
 
