@@ -17,7 +17,7 @@ const oAuthProviders = [
   'facebook',
   // 'twitch',
   // 'google',
-  // 'github',
+  'github',
   // 'twitter'
 ]
 
