@@ -1,5 +1,6 @@
-import {Button} from 'react-bootstrap'
+import { RaisedButton } from 'material-ui'
 import React from 'react';
+import styles from './styles/logout.css'
 
 export default class Logout extends React.Component {
   constructor() {
@@ -13,7 +14,13 @@ export default class Logout extends React.Component {
 
   render() {
     return (
-      <Button onClick={Logout.logout}>Logout</Button>
+      <RaisedButton
+        className={styles.logout}
+        onClick={Logout.logout}
+        secondary={true}
+      >
+        Logout
+      </RaisedButton>
     )
   }
 }

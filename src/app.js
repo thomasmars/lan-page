@@ -1,39 +1,49 @@
 import './index.html'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {Button} from 'react-bootstrap'
-import Poll from './poll';
-import Logout from './logout';
+import styles from './styles/app.css'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import Logo from './components/headerElements/logo'
+import Content from './components/wrapper/content'
 
-var horizon = Horizon()
+import injectTapEventPlugin from 'react-tap-event-plugin'
 
-const authorize = function (identityProvider) {
-  horizon.authEndpoint(identityProvider).subscribe((endpoint) => {
-    window.location.pathname = endpoint;
-  });
-}
-
+injectTapEventPlugin()
 const oAuthProviders = [
-  'facebook',
+  {
+    providerName: 'facebook',
+    iconName: 'fa fa-facebook-square'
+  },
+  {
+    providerName: 'github',
+    iconName: 'fa fa-github'
+  },
+  {
+    providerName: 'twitch',
+    iconName: 'fa fa-twitch'
+  }
+  // 'facebook',
   // 'twitch',
   // 'google',
-  'github',
+  // 'github',
   // 'twitter'
 ]
 
+const app = document.querySelector('.app')
+app.classList.add(styles.app)
+
+const horizon = Horizon()
 horizon.connect()
-const loginElements = () => {
-  return horizon.hasAuthToken() ? <Logout /> :
-    oAuthProviders.map((provider) => {
-      return <Button key={provider} onClick={authorize.bind(this, provider)}
-                     bsSize="large">Log in with {provider}</Button>
-    })
-}
+
+const AppReact = () => (
+  <div>
+    <Logo />
+    <Content oAuthProviders={oAuthProviders} />
+  </div>
+)
 
 ReactDOM.render(
-  <div>
-    {loginElements()}
-    <Poll />
-  </div>
-  , document.querySelector('.app')
+  <MuiThemeProvider>
+    <AppReact/>
+  </MuiThemeProvider>, app
 )

@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: row;
+
+  padding: 2em 0;
+}
+
+.login {
+  justify-content: center;
+}
+
+.logout {
+  justify-content: flex-end;
+}

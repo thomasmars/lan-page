@@ -1,0 +1,11 @@
+.wrapper {
+  background: #3e3e3e;
+  padding-bottom: 2em;
+  width: 100%;
+}
+
+.logo {
+  border-radius: 0.5em;
+  width: 100%;
+  height: auto;
+}

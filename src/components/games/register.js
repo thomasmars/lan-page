@@ -1,0 +1,54 @@
+import React from 'react'
+import styles from './styles/register.css'
+import Form from './form'
+import {FloatingActionButton} from 'material-ui';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+
+export default class Register extends React.Component {
+  constructor() {
+    super()
+
+    this.horizon = Horizon()
+    this.horizon.connect()
+
+    this.state = {
+      isShowingForm: false
+    }
+
+    this.toggleForm = this.toggleForm.bind(this)
+  }
+
+  toggleForm() {
+    this.setState({
+      isShowingForm: !this.state.isShowingForm
+    })
+    console.log("toggling form from register");
+  }
+
+  render() {
+    let registerGame = <div className={styles.denied}>You must log in to suggest
+      games and vote.</div>
+
+    if (this.horizon.hasAuthToken()) {
+      console.log("is showing form ?", this.state.isShowingForm);
+      if (!this.state.isShowingForm) {
+        registerGame = (
+          <FloatingActionButton onClick={this.toggleForm}>
+            <ContentAdd />
+          </FloatingActionButton>
+        )
+      }
+      else {
+        registerGame = (
+          <Form toggleForm={this.toggleForm}/>
+        )
+      }
+    }
+
+    return (
+      <div className={styles.wrapper}>
+        {registerGame}
+      </div>
+    )
+  }
+}

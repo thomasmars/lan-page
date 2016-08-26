@@ -16,13 +16,32 @@ module.exports = {
         loader: 'babel',
       },
       {
+        test: /\.css$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: 'style!css?modules',
+      },
+      {
         test: /\.html$/,
         include: [
           path.resolve(__dirname, 'src')
         ],
         loader: 'file?name=[name].[ext]'
+      },
+      {
+        test: /\.(png|jpg)$/,
+        include: [
+          path.resolve(__dirname, 'src')
+        ],
+        loader: 'url?limit=25000'
       }
     ]
   },
-  devtool: 'sourcemaps'
+  devtool: 'sourcemaps',
+  devServer: {
+    port: 8050,
+    contentBase: "./dist",
+    quiet: true
+  }
 };
