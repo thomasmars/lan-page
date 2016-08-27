@@ -12,3 +12,10 @@
 .logout {
   justify-content: flex-end;
 }
+
+.inner {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}

@@ -8,7 +8,7 @@ import {
 } from 'material-ui';
 
 export default class Form extends React.Component {
-  constructor({ toggleForm }) {
+  constructor({toggleForm}) {
     super()
 
     this.horizon = Horizon()
@@ -25,11 +25,22 @@ export default class Form extends React.Component {
     this.submitGame = this.submitGame.bind(this)
 
     this.state = {
+      currentUser: {},
       gameName: '',
       price: '',
       timeRequired: '',
-      power: ''
+      power: '',
+      warnings: {
+        fillIn: false,
+        gameExists: false
+      }
     }
+
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.setState({
+        currentUser: user
+      })
+    })
   }
 
   setGameName(e, val) {
@@ -45,8 +56,6 @@ export default class Form extends React.Component {
   }
 
   setTimeRequired(e, idx, val) {
-    console.log("setting timereq", val);
-    console.log("what is the other ?", idx);
     this.setState({
       timeRequired: val
     })
@@ -58,39 +67,71 @@ export default class Form extends React.Component {
     })
   }
 
+  isValidFields() {
+    return (
+      this.state.gameName.length &&
+      this.state.price.length &&
+      this.state.timeRequired.length &&
+      this.state.power.length
+    )
+  }
+
   submitGame() {
-    // Store game in database
-    this.horizon.currentUser().fetch().subscribe(user => {
-      // TODO: Check if gamename already exists
-      console.log("storing state", this.state);
+    if (!this.state.currentUser.id) {
+      return
+    }
 
-      this.dbGames.store({
-        userId: user.id,
-        gameName: this.state.gameName,
-        price: this.state.price,
-        timeRequired: this.state.timeRequired,
-        power: this.state.power,
-        votes: 0,
-        date: new Date()
-      })
-
-      // Clear state
+    // Validate fields
+    if (!this.isValidFields()) {
+      const warnings = {
+        fillIn: true
+      }
       this.setState({
-        gameName: '',
-        price: '',
-        timeRequired: '',
-        power: ''
+        warnings
       })
-    })
 
-    console.log("toggle form from form");
-    this.toggleForm();
+      return
+    }
+
+
+    this.dbGames.fetch().defaultIfEmpty().subscribe(game => {
+      const gameExists = game.reduce((prev, current) => {
+        return prev || (current.gameName.toLowerCase() === this.state.gameName.toLowerCase())
+      }, false)
+
+      // Store if game does not exist
+      if (gameExists) {
+        let warnings = {
+          gameExists: true
+        }
+        this.setState({
+          warnings
+        })
+      }
+      else {
+        this.dbGames.store({
+          userId: this.state.currentUser.id,
+          gameName: this.state.gameName,
+          price: this.state.price,
+          timeRequired: this.state.timeRequired,
+          power: this.state.power,
+          votes: [],
+          date: new Date()
+        })
+
+        this.toggleForm();
+      }
+    })
   }
 
   render() {
     return (
       <div className={styles.wrapper}>
         <div>Type in your game suggestion</div>
+        {this.state.warnings.fillIn ?
+          <div className={styles.warning}>Fill in all fields</div> : null}
+        {this.state.warnings.gameExists ?
+          <div className={styles.warning}>Game already exists</div> : null}
         <br />
         <TextField
           className={styles.text}

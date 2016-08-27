@@ -1,7 +1,8 @@
-import React from 'react';
-import Logout from './components/logout';
-import Login from './components/login';
-import styles from './styles/header.css';
+import React from "react";
+import Logout from "./components/logout";
+import Login from "./components/login";
+import RegisterNick from "./registerNick";
+import styles from "./styles/header.css";
 
 const horizon = Horizon()
 export default class Header extends React.Component {
@@ -16,8 +17,14 @@ export default class Header extends React.Component {
     let buttons
 
     if (horizon.hasAuthToken()) {
+
       wrapperClasses += ` ${styles.logout}`
-      buttons = <Logout/>
+      buttons = (
+        <div className={styles.inner}>
+          <RegisterNick/>
+          <Logout/>
+        </div>
+      )
     }
     else {
       wrapperClasses += ` ${styles.login}`

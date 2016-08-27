@@ -6,3 +6,8 @@
 .text {
   margin-top: 1.25em;
 }
+
+.warning {
+  margin-top: 1em;
+  color: red;
+}

@@ -12,25 +12,34 @@ export default class Register extends React.Component {
     this.horizon.connect()
 
     this.state = {
-      isShowingForm: false
+      isShowingForm: false,
+      hasUserName: false
     }
 
     this.toggleForm = this.toggleForm.bind(this)
+
+    this.horizon.currentUser().watch().subscribe(user => {
+      if (user.name) {
+        this.setState({
+          hasUserName: true
+        })
+      }
+    })
   }
 
   toggleForm() {
     this.setState({
       isShowingForm: !this.state.isShowingForm
     })
-    console.log("toggling form from register");
   }
 
   render() {
-    let registerGame = <div className={styles.denied}>You must log in to suggest
+    let registerGame = <div className={styles.denied}>Log in to suggest
       games and vote.</div>
 
-    if (this.horizon.hasAuthToken()) {
-      console.log("is showing form ?", this.state.isShowingForm);
+    if (this.horizon.hasAuthToken() && this.state.hasUserName) {
+
+
       if (!this.state.isShowingForm) {
         registerGame = (
           <FloatingActionButton onClick={this.toggleForm}>

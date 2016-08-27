@@ -15,17 +15,24 @@ class Games extends React.Component {
 
     this.horizon = Horizon();
     this.horizon.connect();
-    this.dbGames = this.horizon('games');
-    this.dbGames.watch().subscribe(items => {
-      const updatedGames = items.map((game) => {
-        console.log("watch game ? ", game);
-        return game
-      })
+    this.dbGames = this.horizon('games')
 
-      this.setState({
-        games: updatedGames
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.dbGames.watch().subscribe(items => {
+        const updatedGames = items.map((game) => {
+          const isChecked = game.votes.includes(user.id)
+          return { game, isChecked }
+        })
+        updatedGames.sort((game1, game2) => {
+          return game2.game.votes.length - game1.game.votes.length;
+        })
+
+        this.setState({
+          games: updatedGames
+        })
       })
     })
+
 
     this.isAuthenticated = this.horizon.hasAuthToken();
 
@@ -57,26 +64,22 @@ class Games extends React.Component {
                    showRowHover={false}
                    stripedRows={false}>
           {this.state.games.map((game, idx) => {
-            console.log("game id ?", game, idx);
-            console.log("index", idx);
             return (
               <TableRow key={idx}>
-                <TableRowColumn>{game.votes}</TableRowColumn>
-                <TableRowColumn>{game.gameName}</TableRowColumn>
-                <TableRowColumn>{game.price}</TableRowColumn>
-                <TableRowColumn>{game.timeRequired}</TableRowColumn>
-                <TableRowColumn>{game.power}</TableRowColumn>
+                <TableRowColumn>{game.game.votes.length}</TableRowColumn>
+                <TableRowColumn>{game.game.gameName}</TableRowColumn>
+                <TableRowColumn>{game.game.price}</TableRowColumn>
+                <TableRowColumn>{game.game.timeRequired}</TableRowColumn>
+                <TableRowColumn>{game.game.power}</TableRowColumn>
                 {(() => {
-                  console.log("inside function");
                   let lastRow = null;
                   if (this.isAuthenticated) {
                     lastRow = (
                       <TableRowColumn style={{paddingLeft: "3.75em"}}>
-                        <Vote gameId={game.id}/>
+                        <Vote isChecked={game.isChecked} gameId={game.game.id}/>
                       </TableRowColumn>
                     )
                   }
-                  console.log("last row", lastRow);
                   return lastRow;
                 })()}
               </TableRow>
