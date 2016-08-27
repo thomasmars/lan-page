@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './styles/register.css'
 import Form from './form'
-import {FloatingActionButton} from 'material-ui';
+import {FloatingActionButton, Snackbar} from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class Register extends React.Component {
@@ -13,10 +13,12 @@ export default class Register extends React.Component {
 
     this.state = {
       isShowingForm: false,
-      hasUserName: false
+      hasUserName: false,
+      showSnackBar: false
     }
 
     this.toggleForm = this.toggleForm.bind(this)
+    this.closeSnackBar = this.closeSnackBar.bind(this)
 
     this.horizon.currentUser().watch().subscribe(user => {
       if (user.name) {
@@ -29,7 +31,14 @@ export default class Register extends React.Component {
 
   toggleForm() {
     this.setState({
-      isShowingForm: !this.state.isShowingForm
+      isShowingForm: !this.state.isShowingForm,
+      showSnackBar: this.state.isShowingForm
+    })
+  }
+
+  closeSnackBar() {
+    this.setState({
+      showSnackBar: false
     })
   }
 
@@ -57,6 +66,12 @@ export default class Register extends React.Component {
     return (
       <div className={styles.wrapper}>
         {registerGame}
+        <Snackbar
+          open={this.state.showSnackBar}
+          message={`Added game`}
+          autoHideDuration={3000}
+          onRequestClose={this.closeSnackBar}
+        />
       </div>
     )
   }

@@ -19,4 +19,10 @@ const isAuthenticated = () => {
   return horizon.hasAuthToken()
 }
 
+export {
+  hasUserName,
+  getUserName,
+  isAuthenticated
+}
+
 // TODO: Create a callback system for listeners that are performed on updates of user

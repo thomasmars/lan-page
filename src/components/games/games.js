@@ -8,6 +8,7 @@ import {
 } from 'material-ui/Table';
 import React from 'react'
 import Vote from './components/vote';
+import { hasUserName } from '../utility/login'
 
 class Games extends React.Component {
   constructor(props) {
@@ -16,6 +17,17 @@ class Games extends React.Component {
     this.horizon = Horizon();
     this.horizon.connect();
     this.dbGames = this.horizon('games')
+
+    this.state = {
+      hasUserName: false,
+      games: []
+    }
+
+    this.horizon.currentUser().watch().subscribe(() => {
+      this.setState({
+        hasUserName: hasUserName()
+      })
+    })
 
     this.horizon.currentUser().fetch().subscribe(user => {
       this.dbGames.watch().subscribe(items => {
@@ -32,13 +44,6 @@ class Games extends React.Component {
         })
       })
     })
-
-
-    this.isAuthenticated = this.horizon.hasAuthToken();
-
-    this.state = {
-      games: []
-    }
   }
 
   render() {
@@ -56,7 +61,7 @@ class Games extends React.Component {
             <TableHeaderColumn>Price</TableHeaderColumn>
             <TableHeaderColumn>Time to learn</TableHeaderColumn>
             <TableHeaderColumn>CPU power</TableHeaderColumn>
-            {this.isAuthenticated ? <TableHeaderColumn>Click to vote</TableHeaderColumn> : null}
+            {hasUserName() ? <TableHeaderColumn>Click to vote</TableHeaderColumn> : null}
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false}
@@ -73,7 +78,7 @@ class Games extends React.Component {
                 <TableRowColumn>{game.game.power}</TableRowColumn>
                 {(() => {
                   let lastRow = null;
-                  if (this.isAuthenticated) {
+                  if (hasUserName()) {
                     lastRow = (
                       <TableRowColumn style={{paddingLeft: "3.75em"}}>
                         <Vote isChecked={game.isChecked} gameId={game.game.id}/>

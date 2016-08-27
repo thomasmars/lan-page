@@ -1,5 +1,5 @@
 import React from 'react'
-import {TextField, FlatButton} from 'material-ui'
+import {Snackbar, TextField, FlatButton} from 'material-ui'
 import styles from './styles/registerNick.css'
 
 export default class RegisterNick extends React.Component {
@@ -11,11 +11,13 @@ export default class RegisterNick extends React.Component {
 
     this.registerName = this.registerName.bind(this)
     this.updateName = this.updateName.bind(this)
+    this.closeSnackBar = this.closeSnackBar.bind(this)
 
     this.state = {
       hasLoadedData: false,
       userName: '',
-      input: ''
+      input: '',
+      showSnackBar: false
     }
   }
 
@@ -30,7 +32,8 @@ export default class RegisterNick extends React.Component {
 
         this.setState({
           input: '',
-          userName: user.name
+          userName: user.name,
+          showSnackBar: true
         })
       })
     }
@@ -51,6 +54,12 @@ export default class RegisterNick extends React.Component {
     })
   }
 
+  closeSnackBar() {
+    this.setState({
+      showSnackBar: false
+    })
+  }
+
   render() {
     let welcomeMessage;
 
@@ -67,11 +76,13 @@ export default class RegisterNick extends React.Component {
         welcomeMessage = (
           <div>
             <TextField
-              hintText="Register name before proceeding"
+              style={{width: "300px"}}
+              hintText="Register nickname before proceeding"
               onChange={this.updateName}
               value={this.state.input}
             />
             <FlatButton
+              style={{marginLeft: "1em"}}
               label="Ok"
               primary={true}
               onClick={this.registerName}
@@ -84,6 +95,12 @@ export default class RegisterNick extends React.Component {
     return (
       <div className={styles.wrapper}>
         {welcomeMessage}
+        <Snackbar
+          open={this.state.showSnackBar}
+          message={`Added nickname: ${this.state.userName}`}
+          autoHideDuration={3000}
+          onRequestClose={this.closeSnackBar}
+        />
       </div>
     )
   }
