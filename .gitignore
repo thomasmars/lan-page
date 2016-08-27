@@ -1,10 +1,9 @@
 .idea
 .hz
 dist
+horizon-key.pem
+horizon-cert.pem
+images
 node_modules
 rethinkdb_data
-Dockerfile
-horizon-cert.pem
-horizon-key.pem
-docker-compose.yml
 workplan
