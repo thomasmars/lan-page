@@ -1,6 +1,7 @@
 import React from 'react'
 import {Snackbar, TextField, FlatButton} from 'material-ui'
 import styles from './styles/registerNick.css'
+import Welcome from './components/welcome'
 
 export default class RegisterNick extends React.Component {
   constructor() {
@@ -67,9 +68,12 @@ export default class RegisterNick extends React.Component {
     if (this.state.hasLoadedData) {
       if (this.state.userName) {
         welcomeMessage = (
-          <div>
-            Welcome {this.state.userName}
-          </div>
+          <Welcome
+            registerName={this.registerName}
+            input={this.state.input}
+            userName={this.state.userName}
+            updateName={this.updateName}
+          />
         )
       }
       else {
