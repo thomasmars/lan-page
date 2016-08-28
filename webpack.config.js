@@ -35,6 +35,13 @@ module.exports = {
           path.resolve(__dirname, 'src')
         ],
         loader: 'url?limit=25000'
+      },
+      {
+        test: /\.ico$/,
+        include: [
+          path.resolve(__dirname, 'src/assets')
+        ],
+        loader: 'file?name=[name].[ext]'
       }
     ]
   },

@@ -5,6 +5,7 @@ import styles from './styles/app.css'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Logo from './components/headerElements/logo'
 import Content from './components/wrapper/content'
+import './assets/favicon.ico'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 
