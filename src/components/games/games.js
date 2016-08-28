@@ -19,8 +19,8 @@ class Games extends React.Component {
     this.horizon.connect();
     this.dbGames = this.horizon('games')
 
-    this.handleRowSelection = this.handleRowSelection.bind(this)
     this.closeRowSelection = this.closeRowSelection.bind(this)
+    this.handleCellSelection = this.handleCellSelection.bind(this)
 
     this.state = {
       hasUserName: false,
@@ -67,8 +67,20 @@ class Games extends React.Component {
     })
   }
 
-  handleRowSelection(rowNumber) {
-    const selectedGame = this.state.games[rowNumber]
+  closeRowSelection() {
+    this.setState({
+      currentGame: {
+        open: false
+      }
+    })
+  }
+
+  handleCellSelection(rowIndex, cellNumber) {
+    if (cellNumber !== 1) {
+      return
+    }
+
+    const selectedGame = this.state.games[rowIndex]
     const voterNames = selectedGame.game.votes.map(userId => {
       const userIdx = this.state.users.findIndex(user => {
         return user.id === userId;
@@ -90,14 +102,6 @@ class Games extends React.Component {
     })
   }
 
-  closeRowSelection() {
-    this.setState({
-      currentGame: {
-        open: false
-      }
-    })
-  }
-
   render() {
     return (
       <div>
@@ -105,7 +109,7 @@ class Games extends React.Component {
                fixedFooter={false}
                selectable={true}
                multiSelectable={false}
-               onRowSelection={this.handleRowSelection}
+               onCellClick={this.handleCellSelection}
         >
           <TableHeader displaySelectAll={false}
                        adjustForCheckbox={false}
