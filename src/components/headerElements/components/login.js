@@ -9,7 +9,7 @@ export default (props) => {
 
   const authorize = (identityProvider) => {
     horizon.authEndpoint(identityProvider).subscribe((endpoint) => {
-      window.location.pathname = endpoint;
+      window.location.replace(endpoint);
     })
   }
 

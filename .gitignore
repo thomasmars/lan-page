@@ -1,6 +1,7 @@
 .idea
 .hz
 dist
+docker-compose.yml
 horizon-key.pem
 horizon-cert.pem
 images
