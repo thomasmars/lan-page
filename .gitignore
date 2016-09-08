@@ -8,3 +8,5 @@ images
 node_modules
 rethinkdb_data
 workplan
+dataBackup/
+liveDbData/

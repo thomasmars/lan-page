@@ -20,13 +20,13 @@ export default class Register extends React.Component {
     this.toggleForm = this.toggleForm.bind(this)
     this.closeSnackBar = this.closeSnackBar.bind(this)
 
-    this.horizon.currentUser().watch().subscribe(user => {
-      if (user.name) {
-        this.setState({
-          hasUserName: true
-        })
-      }
-    })
+    // this.horizon.currentUser().watch().subscribe(user => {
+    //   if (user.name) {
+    //     this.setState({
+    //       hasUserName: true
+    //     })
+    //   }
+    // })
   }
 
   toggleForm() {
