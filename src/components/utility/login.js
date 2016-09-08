@@ -2,7 +2,7 @@ const horizon = Horizon()
 horizon.connect()
 
 let currentUserName = '';
-
+//
 // horizon.currentUser().watch().subscribe(user => {
 //   currentUserName = user.name || currentUserName
 // })

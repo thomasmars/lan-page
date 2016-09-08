@@ -41,12 +41,12 @@ export default class RegisterNick extends React.Component {
   }
 
   componentDidMount() {
-    // this.horizon.currentUser().fetch().subscribe(user => {
-    //   this.setState({
-    //     hasLoadedData: true,
-    //     userName: user.name || ''
-    //   })
-    // })
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.setState({
+        hasLoadedData: true,
+        userName: user.name || ''
+      })
+    })
   }
 
   updateName(e, val) {
