@@ -27,3 +27,15 @@ npm install -g horizon
 hz init
 hz serve --dev
 ```
+
+### Production steps
+
+Upload .hz folder with
+- config.toml
+- schema.toml
+
+Spin up horizon server using your flavour of [docker-compose.yml](https://github.com/rethinkdb/horizon/blob/next/docker-compose.prod.yml).
+
+Log in to docker container, apply schema.toml using the ```hz schema apply``` command.
+ 
+
