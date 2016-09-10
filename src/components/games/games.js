@@ -31,40 +31,40 @@ class Games extends React.Component {
       }
     }
 
-    // this.horizon.currentUser().watch().subscribe(() => {
-    //   this.setState({
-    //     hasUserName: hasUserName()
-    //   })
-    // })
-    //
-    // this.horizon('users').watch().subscribe(dbUsers => {
-    //   const users = dbUsers.map(user => {
-    //     return {
-    //       id: user.id,
-    //       name: user.name
-    //     }
-    //   })
-    //
-    //   this.setState({
-    //     users
-    //   })
-    // })
+    this.horizon.currentUser().watch().subscribe(() => {
+      this.setState({
+        hasUserName: hasUserName()
+      })
+    })
 
-    // this.horizon.currentUser().fetch().subscribe(user => {
-    //   this.dbGames.watch().subscribe(items => {
-    //     const updatedGames = items.map((game) => {
-    //       const isChecked = game.votes.includes(user.id)
-    //       return {game, isChecked}
-    //     })
-    //     updatedGames.sort((game1, game2) => {
-    //       return game2.game.votes.length - game1.game.votes.length;
-    //     })
-    //
-    //     this.setState({
-    //       games: updatedGames
-    //     })
-    //   })
-    // })
+    this.horizon('users').watch().subscribe(dbUsers => {
+      const users = dbUsers.map(user => {
+        return {
+          id: user.id,
+          name: user.name
+        }
+      })
+
+      this.setState({
+        users
+      })
+    })
+
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.dbGames.watch().subscribe(items => {
+        const updatedGames = items.map((game) => {
+          const isChecked = game.votes.includes(user.id)
+          return {game, isChecked}
+        })
+        updatedGames.sort((game1, game2) => {
+          return game2.game.votes.length - game1.game.votes.length;
+        })
+
+        this.setState({
+          games: updatedGames
+        })
+      })
+    })
   }
 
   closeRowSelection() {

@@ -2,10 +2,10 @@ const horizon = Horizon()
 horizon.connect()
 
 let currentUserName = '';
-//
-// horizon.currentUser().watch().subscribe(user => {
-//   currentUserName = user.name || currentUserName
-// })
+
+horizon.currentUser().watch().subscribe(user => {
+  currentUserName = user.name || currentUserName
+})
 
 const hasUserName = () => {
   return !!currentUserName.length

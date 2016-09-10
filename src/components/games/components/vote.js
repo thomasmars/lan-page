@@ -13,11 +13,11 @@ export default class Vote extends React.Component {
       currentUser: ''
     }
 
-    // this.horizon.currentUser().fetch().subscribe(user => {
-    //   this.setState({
-    //     currentUser: user.id
-    //   })
-    // })
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.setState({
+        currentUser: user.id
+      })
+    })
   }
 
   handleCheck(e, isInputChecked) {
@@ -26,23 +26,23 @@ export default class Vote extends React.Component {
     }
 
     // Update game votes
-    // this.dbGames.find(this.props.gameId).fetch().subscribe(game => {
-    //   const votes = game.votes || [];
-    //   if (isInputChecked) {
-    //     votes.push(this.state.currentUser)
-    //   }
-    //   else {
-    //     const idx = votes.indexOf(this.state.currentUser);
-    //     if (idx >= 0) {
-    //       votes.splice(idx, 1)
-    //     }
-    //   }
-    //
-    //   this.dbGames.update({
-    //     id: game.id,
-    //     votes: votes
-    //   })
-    // })
+    this.dbGames.find(this.props.gameId).fetch().subscribe(game => {
+      const votes = game.votes || [];
+      if (isInputChecked) {
+        votes.push(this.state.currentUser)
+      }
+      else {
+        const idx = votes.indexOf(this.state.currentUser);
+        if (idx >= 0) {
+          votes.splice(idx, 1)
+        }
+      }
+
+      this.dbGames.update({
+        id: game.id,
+        votes: votes
+      })
+    })
   }
 
   render() {

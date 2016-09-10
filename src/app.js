@@ -34,7 +34,11 @@ const app = document.querySelector('.app')
 app.classList.add(styles.app)
 
 const horizon = Horizon()
-horizon.connect()
+horizon.connect();
+
+horizon('users').fetch().subscribe(user => {
+  console.log(user);
+});
 
 const AppReact = () => (
   <div>

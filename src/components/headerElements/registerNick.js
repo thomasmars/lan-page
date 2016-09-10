@@ -24,19 +24,19 @@ export default class RegisterNick extends React.Component {
 
   registerName() {
     if (this.state.input.length) {
-      // this.horizon.currentUser().fetch().subscribe(user => {
-      //   user.name = this.state.input
-      //   this.horizon('users').update({
-      //     id: user.id,
-      //     name: user.name
-      //   })
-      //
-      //   this.setState({
-      //     input: '',
-      //     userName: user.name,
-      //     showSnackBar: true
-      //   })
-      // })
+      this.horizon.currentUser().fetch().subscribe(user => {
+        user.name = this.state.input
+        this.horizon('users').update({
+          id: user.id,
+          name: user.name
+        })
+
+        this.setState({
+          input: '',
+          userName: user.name,
+          showSnackBar: true
+        })
+      })
     }
   }
 

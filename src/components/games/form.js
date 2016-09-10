@@ -36,11 +36,11 @@ export default class Form extends React.Component {
       }
     }
 
-    // this.horizon.currentUser().fetch().subscribe(user => {
-    //   this.setState({
-    //     currentUser: user
-    //   })
-    // })
+    this.horizon.currentUser().fetch().subscribe(user => {
+      this.setState({
+        currentUser: user
+      })
+    })
   }
 
   setGameName(e, val) {
@@ -93,35 +93,35 @@ export default class Form extends React.Component {
       return
     }
 
-    //
-    // this.dbGames.fetch().defaultIfEmpty().subscribe(game => {
-    //   const gameExists = game.reduce((prev, current) => {
-    //     return prev || (current.gameName.toLowerCase() === this.state.gameName.toLowerCase())
-    //   }, false)
-    //
-    //   // Store if game does not exist
-    //   if (gameExists) {
-    //     let warnings = {
-    //       gameExists: true
-    //     }
-    //     this.setState({
-    //       warnings
-    //     })
-    //   }
-    //   else {
-    //     this.dbGames.store({
-    //       userId: this.state.currentUser.id,
-    //       gameName: this.state.gameName,
-    //       price: this.state.price,
-    //       timeRequired: this.state.timeRequired,
-    //       power: this.state.power,
-    //       votes: [],
-    //       date: new Date()
-    //     })
-    //
-    //     this.toggleForm();
-    //   }
-    // })
+
+    this.dbGames.fetch().defaultIfEmpty().subscribe(game => {
+      const gameExists = game.reduce((prev, current) => {
+        return prev || (current.gameName.toLowerCase() === this.state.gameName.toLowerCase())
+      }, false)
+
+      // Store if game does not exist
+      if (gameExists) {
+        let warnings = {
+          gameExists: true
+        }
+        this.setState({
+          warnings
+        })
+      }
+      else {
+        this.dbGames.store({
+          userId: this.state.currentUser.id,
+          gameName: this.state.gameName,
+          price: this.state.price,
+          timeRequired: this.state.timeRequired,
+          power: this.state.power,
+          votes: [],
+          date: new Date()
+        })
+
+        this.toggleForm();
+      }
+    })
   }
 
   render() {
