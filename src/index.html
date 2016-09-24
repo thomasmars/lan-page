@@ -1,14 +1,28 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <script src="/horizon/horizon.js"></script>
-    <!--<script src="https://use.fontawesome.com/d3a623e04f.js"></script>-->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  </head>
-  <body style="background: #3e3e3e;">
-   <div class="app"></div>
-  </body>
-  <script src="./bundle.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <script src="/horizon/horizon.js"></script>
+  <!--<script src="https://use.fontawesome.com/d3a623e04f.js"></script>-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500"
+        rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+</head>
+<body style="background: #3e3e3e;">
+<div>This is where we will place the video (for now..)</div>
+<embed
+  type="application/x-vlc-plugin"
+  pluginspage="http://www.videolan.org"
+  src="udp://@:5004"
+/>
+<!--Will send to 54.16.81.220 over UDP, then catch it this way-->
+<!--src="udp://@:5004"-->
+
+<!--src="rtp://54.16.81.220"-->
+<!--src="rtp://192.168.1.142"-->
+
+<div class="app"></div>
+</body>
+<script src="./bundle.js"></script>
 </html>
