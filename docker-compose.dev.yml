@@ -34,3 +34,5 @@ node-backend:
     - rethinkdb
   volumes:
     - ./nodeBackend/:/usr/src/app
+  ports:
+    - "8020:8020"

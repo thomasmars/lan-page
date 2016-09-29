@@ -1,13 +1,17 @@
+"use strict"
+
 var express = require('express');
 var r = require('rethinkdb');
 
 var app = express();
+let nextCommand = {};
+
 
 app.get('/', function (req, res) {
-  res.send('Hello World!');
+  res.send(JSON.stringify(nextCommand));
 });
 
-app.listen(3000, function () {
+app.listen(8020, function () {
   console.log('Example app listening on port 3000!');
 });
 
@@ -41,6 +45,7 @@ r.connect({
     cursor.each((cErr, res) => {
       if (err) throw err
       console.log("res", res)
+      nextCommand = res;
     })
   })
 })
