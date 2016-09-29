@@ -1,0 +1,36 @@
+rethinkdb:
+  image: rethinkdb:latest
+  container_name: rtdb
+  ports:
+    - "28015:28015"
+    - "8080:8080"
+horizon:
+  image: rethinkdb/horizon:latest
+  container_name: hzdev
+  command: su -s /bin/sh horizon -c "hz serve --connect rethinkdb://rethinkdb:28015 --bind all /usr/app"
+  environment:
+    - HZ_KEY_FILE=./horizon-key.pem
+    - HZ_CERT_FILE=./horizon-cert.pem
+    - HZ_SECURE=yes
+#    - HZ_PERMISSIONS=yes
+#    - HZ_AUTO_CREATE_COLLECTION=yes
+#    - HZ_AUTO_CREATE_INDEX=yes
+#    - HZ_START_RETHINKDB=no
+#    - HZ_ALLOW_UNAUTHENTICATED=yes
+#    - HZ_ALLOW_ANONYMOUS=yes
+    - HZ_SERVE_STATIC=./dist
+#    - HZ_SCHEMA_FILE=./.hz/schema.toml
+#    - HZ_ACCESS_CONTROL_ALLOW_ORIGIN=*
+  volumes:
+    - ./hz/:/usr/app
+  links:
+    - rethinkdb
+  ports:
+    - "8181:8181"
+node-backend:
+  image: thomasmars/node
+  container_name: node
+  links:
+    - rethinkdb
+  volumes:
+    - ./nodeBackend/:/usr/src/app

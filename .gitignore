@@ -10,3 +10,5 @@ rethinkdb_data
 workplan
 dataBackup/
 liveDbData/
+nodeBackend/node_modules
+nodeBackend/worklog.md
